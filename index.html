@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mouse 13 Games</title>
-<meta name="description" content="Play free online games at Mouse 13 Games, including Snake, Memory, Tic Tac Toe, 2048, Minesweeper, and more.">
+<title>Mouse 13 Games - js like me</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -65,7 +63,7 @@
     transition: transform .08s, box-shadow .08s;
     display: inline-block;
   }
-  .btn:hover { transform: translateY(-1px); }
+  @media (hover: hover) { .btn:hover { transform: translateY(-1px); } }
   .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #b97a00; }
   .btn.ghost { background: #3a2a85; color: #fff; box-shadow: 0 4px 0 #22175a; }
   .btn.ghost:active { box-shadow: 0 1px 0 #22175a; }
@@ -118,7 +116,8 @@
     box-shadow: 0 8px 0 rgba(0,0,0,.35);
     transition: transform .12s, box-shadow .12s;
   }
-  .card:hover { transform: translateY(-5px) rotate(-1deg) scale(1.03); box-shadow: 0 13px 0 rgba(0,0,0,.35); }
+  @media (hover: hover) { .card:hover { transform: translateY(-5px) rotate(-1deg) scale(1.03); box-shadow: 0 13px 0 rgba(0,0,0,.35); } }
+  .card, .btn, .chip { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .card .art {
     display: grid; place-items: center; aspect-ratio: 1.15;
     font-size: 4rem; text-shadow: 0 6px 0 rgba(0,0,0,.25);
@@ -286,23 +285,147 @@
     .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .card .art { font-size: 3.2rem; }
   }
+
+  /* ===== new games ===== */
+  .c4 {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    width: min(94vw, 420px); padding: 10px; background: #1d4ed8; border-radius: 16px;
+    border: 4px solid rgba(255,255,255,.9); box-shadow: 0 8px 0 rgba(0,0,0,.35);
+  }
+  .c4 .slot {
+    aspect-ratio: 1; border: 0; border-radius: 50%; padding: 0; cursor: pointer;
+    background: #0b1b4d; box-shadow: inset 0 4px 0 rgba(0,0,0,.45);
+  }
+  .c4 .slot.r { background: #ff4f6d; }
+  .c4 .slot.y { background: #ffd23f; }
+  .c4 .slot.win { outline: 4px solid #fff; animation: pulse .5s infinite alternate; }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.12); } }
+
+  .simon {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    width: min(88vw, 340px); padding: 14px; background: #1b0f4a; border-radius: 22px;
+    border: 4px solid rgba(255,255,255,.9); box-shadow: 0 8px 0 rgba(0,0,0,.35);
+  }
+  .simon button {
+    aspect-ratio: 1; border: 0; border-radius: 20px; cursor: pointer; opacity: .5;
+    box-shadow: 0 5px 0 rgba(0,0,0,.35); transition: opacity .06s, filter .06s;
+  }
+  .simon button.lit { opacity: 1; filter: brightness(1.45); transform: scale(.97); }
+  .simon .s0 { background: #22c55e; }
+  .simon .s1 { background: #ef4444; }
+  .simon .s2 { background: #facc15; }
+  .simon .s3 { background: #3b82f6; }
+
+  /* ===== toast, effects, secrets ===== */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; z-index: 110; max-width: 92vw; text-align: center;
+    transform: translateX(-50%) translateY(30px); opacity: 0; pointer-events: none;
+    background: #1b0a40; color: #fff; font-weight: 600; padding: 12px 22px;
+    border: 3px solid var(--yellow); border-radius: 999px; transition: opacity .3s, transform .3s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .fx-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 100; }
+  .fx-item { position: absolute; top: -70px; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(115vh) rotate(360deg); } }
+  .run-item { position: absolute; left: -100px; font-size: 3.4rem; animation: runacross 4s linear forwards; }
+  @keyframes runacross { to { left: 105vw; } }
+  .shake { animation: shake .55s; }
+  @keyframes shake {
+    0%, 100% { transform: none; } 20% { transform: translateX(-10px) rotate(-1deg); }
+    40% { transform: translateX(10px) rotate(1deg); } 60% { transform: translateX(-8px); } 80% { transform: translateX(8px); }
+  }
+  html.rainbow { animation: hue 2s linear infinite; }
+  @keyframes hue { to { filter: hue-rotate(360deg); } }
+  .boo {
+    position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; text-align: center;
+    background: rgba(0,0,0,.78); font-size: min(34vw, 240px); line-height: 1; pointer-events: none;
+    animation: boo 1s forwards;
+  }
+  .boo-t { font-size: .22em; font-weight: 700; color: #ffb347; }
+  @keyframes boo { 0% { opacity: 0; transform: scale(.3); } 20% { opacity: 1; transform: scale(1.08); } 100% { opacity: 0; transform: scale(1.4); } }
+  .badge.spooky { background: #ff7a00; }
+  .badge.secret { background: #facc15; color: #1b0a40; }
+
+  /* ===== Halloween theme ===== */
+  .hw { display: none; }
+  body.halloween .hw { display: inline; }
+  body.halloween .nh { display: none; }
+  .spooky-layer { display: none; }
+  body.halloween .spooky-layer { display: block; }
+  .spooky-layer .bat {
+    position: fixed; left: -70px; z-index: 6; cursor: pointer; pointer-events: auto;
+    animation: flyacross linear infinite; user-select: none;
+  }
+  @keyframes flyacross {
+    0% { transform: translate(0, 0) rotate(-8deg); }
+    25% { transform: translate(28vw, -34px) rotate(8deg); }
+    50% { transform: translate(58vw, 22px) rotate(-6deg); }
+    75% { transform: translate(84vw, -26px) rotate(6deg); }
+    100% { transform: translate(118vw, 12px) rotate(-8deg); }
+  }
+  .spooky-layer .ghost-float { position: fixed; z-index: 4; opacity: .28; pointer-events: none; font-size: 3.4rem; animation: bob 5s ease-in-out infinite alternate; }
+  @keyframes bob { from { transform: translateY(-14px); } to { transform: translateY(18px); } }
+  .spooky-layer .web { position: fixed; top: 58px; z-index: 0; font-size: 3rem; opacity: .4; pointer-events: none; line-height: 1; }
+  main { position: relative; z-index: 1; }
+  .spooky-layer .web-l { left: 0; }
+  .spooky-layer .web-r { right: 0; transform: scaleX(-1); }
+  body.in-game .spooky-layer .bat, body.in-game .spooky-layer .ghost-float { display: none; }
+
+  body.halloween {
+    --bg: #0b0414; --card: #1a0a2e; --pink: #ff7a00; --cyan: #b266ff; --yellow: #ffb347;
+    --green: #8dff3d; --red: #ff3b3b; --muted: #cdb0ee;
+    background:
+      radial-gradient(1100px 600px at 12% -10%, #5b1f8f 0, transparent 60%),
+      radial-gradient(900px 500px at 108% 0, #b34100 0, transparent 55%),
+      radial-gradient(700px 400px at 50% 110%, #2b0a45 0, transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+  }
+  body.halloween .topbar { background: rgba(11, 4, 20, .88); border-bottom-color: #ff7a00; box-shadow: 0 0 18px rgba(255,122,0,.35); }
+  body.halloween .controls input { background: #1a0a2e; border-color: #b266ff; }
+  body.halloween .controls input:focus { border-color: #ff7a00; }
+  body.halloween .chip { background: #2a1245; border-color: #55307f; }
+  body.halloween .chip.active { background: #ff7a00; color: #1a0a2e; border-color: #fff; }
+  body.halloween .btn { background: linear-gradient(180deg, #ffb347, #ff7a00); box-shadow: 0 4px 0 #a34a00; }
+  body.halloween .btn:active { box-shadow: 0 1px 0 #a34a00; }
+  body.halloween .btn.ghost { background: #3b1a63; color: #fff; box-shadow: 0 4px 0 #1f0b38; }
+  body.halloween .btn.ghost:active { box-shadow: 0 1px 0 #1f0b38; }
+  body.halloween .pills span { background: rgba(255,122,0,.12); border-color: rgba(255,122,0,.45); }
+  body.halloween .stats div { background: rgba(255,122,0,.1); border-color: rgba(255,122,0,.35); }
+  body.halloween .overlay { background: rgba(14, 4, 26, .86); }
+  body.halloween .overlay h2 { color: #ffb347; }
+  body.halloween .card { border-color: #ff9a3c; box-shadow: 0 8px 0 rgba(0,0,0,.5), 0 0 20px rgba(255,122,0,.3); }
+  body.halloween .game-canvas { border-color: #ff9a3c; }
+  body.halloween .hero h1 { animation: flicker 5s infinite; filter: drop-shadow(0 0 14px rgba(255,122,0,.55)); }
+  @keyframes flicker { 0%, 91%, 100% { opacity: 1; } 92% { opacity: .5; } 93% { opacity: 1; } 95% { opacity: .65; } 96% { opacity: 1; } }
+  body.halloween .tagline { color: #ffb347; }
+  body.halloween footer b { color: #ff9a3c; }
+  body.halloween .toast { border-color: #ff7a00; background: #1a0a2e; }
+
+  @media (max-width: 560px) {
+    .topnav a.btn { display: none; }
+  }
 </style>
 </head>
 <body>
   <header class="topbar">
     <a class="logo" href="#/" aria-label="Mouse 13 Games home">
-      <span class="logo-emoji">🐭</span>
+      <span class="logo-emoji"><span class="nh">🐭</span><span class="hw">🎃</span></span>
       <span class="logo-text"><b>MOUSE 13 GAMES</b><i>js like me</i></span>
     </a>
     <span class="spacer"></span>
-    <nav class="topnav"><a class="btn small" href="#/">🏠 Home</a></nav>
+    <nav class="topnav"><button class="btn small ghost" id="theme-btn" type="button">🎃 Halloween: on</button><a class="btn small" href="#/">🏠 Home</a></nav>
   </header>
 
   <main id="app"></main>
 
   <footer>
-    <b>Mouse 13 Games</b> · js like me 😎 · made for fun, play as much as you want
+    <b>Mouse 13 Games</b> · js like me 😎 · made for fun, play as much as you want<span class="hw"><br>🎃 Happy Halloween! 👻🦇</span>
   </footer>
+
+  <div class="spooky-layer" id="spooky"></div>
+  <div class="fx-layer" id="fx"></div>
+  <div class="toast" id="toast"></div>
 
 <script>
 (() => {
@@ -1137,6 +1260,524 @@
   /* =====================================================
      GAME LIST
      ===================================================== */
+  /* =====================================================
+     GAME 11: CONNECT 4 (vs CPU)
+     ===================================================== */
+  function connect4Game(api) {
+    const R = 6, C = 7;
+    const wrap = el('div', 'c4'); api.add(wrap);
+    const slots = [];
+    let board = [], over = false, busy = false, wins = 0;
+    for (let i = 0; i < R * C; i++) {
+      const b = el('button', 'slot'); b.type = 'button'; b.setAttribute('aria-label', 'column ' + ((i % C) + 1));
+      b.addEventListener('click', () => play(i % C));
+      wrap.appendChild(b); slots.push(b);
+    }
+    const lines = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      [[0, 1], [1, 0], [1, 1], [1, -1]].forEach(([dr, dc]) => {
+        const er = r + 3 * dr, ec = c + 3 * dc;
+        if (er >= 0 && er < R && ec >= 0 && ec < C) lines.push([0, 1, 2, 3].map(k => (r + k * dr) * C + (c + k * dc)));
+      });
+    }
+    const findWin = p => lines.find(l => l.every(i => board[i] === p)) || null;
+    const dropRow = col => { for (let r = R - 1; r >= 0; r--) if (!board[r * C + col]) return r; return -1; };
+    function paint() { slots.forEach((s, i) => { s.className = 'slot' + (board[i] ? ' ' + board[i] : ''); }); }
+
+    function wouldWin(col, p) {
+      const r = dropRow(col); board[r * C + col] = p;
+      const w = !!findWin(p); board[r * C + col] = ''; return w;
+    }
+    function cpuPick() {
+      const valid = []; for (let c = 0; c < C; c++) if (dropRow(c) >= 0) valid.push(c);
+      for (const c of valid) if (wouldWin(c, 'y')) return c;
+      for (const c of valid) if (wouldWin(c, 'r')) return c;
+      const safe = valid.filter(col => {
+        const r = dropRow(col); if (r <= 0) return true;
+        board[r * C + col] = 'y';
+        const bad = wouldWin(col, 'r');
+        board[r * C + col] = '';
+        return !bad;
+      });
+      const pool = safe.length ? safe : valid;
+      const weights = [1, 2, 3, 5, 3, 2, 1];
+      let x = Math.random() * pool.reduce((s, c) => s + weights[c], 0);
+      for (const c of pool) { x -= weights[c]; if (x <= 0) return c; }
+      return pool[0];
+    }
+    function end(res, line) {
+      over = true;
+      if (line) line.forEach(i => slots[i].classList.add('win'));
+      let title;
+      if (res === 'r') { wins++; api.setScore(wins); api.finish(wins); title = 'You win! 🎉'; }
+      else if (res === 'y') title = 'CPU wins 🤖';
+      else title = "It's a draw 🤝";
+      api.status(title);
+      api.timeout(() => api.overlay(title, 'Wins this session: ' + wins, 'Next round', newRound), 1000);
+    }
+    function play(col) {
+      if (over || busy) return;
+      const r = dropRow(col); if (r < 0) return;
+      board[r * C + col] = 'r'; paint();
+      const w = findWin('r'); if (w) return end('r', w);
+      if (board.every(Boolean)) return end('draw');
+      busy = true; api.status('CPU is thinking…');
+      api.timeout(() => {
+        const cc = cpuPick(), rr = dropRow(cc);
+        board[rr * C + cc] = 'y'; paint(); busy = false;
+        const w2 = findWin('y'); if (w2) return end('y', w2);
+        if (board.every(Boolean)) return end('draw');
+        api.status('Your turn! You are 🔴');
+      }, 500);
+    }
+    function newRound() {
+      board = Array(R * C).fill(''); over = false; busy = false; paint();
+      api.hideOverlay(); api.status('Your turn! You are 🔴 - click a column');
+    }
+    newRound();
+  }
+
+  /* =====================================================
+     GAME 12: SIMON SAYS
+     ===================================================== */
+  function simonGame(api) {
+    const wrap = el('div', 'simon'); api.add(wrap);
+    const pads = [], freqs = [330, 262, 392, 196];
+    let seq = [], pos = 0, accepting = false, running = false, actx = null;
+    function beep(i, ms) {
+      try {
+        actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+        if (actx.resume) actx.resume();
+        const o = actx.createOscillator(), gn = actx.createGain();
+        o.type = 'sine'; o.frequency.value = freqs[i]; gn.gain.value = 0.15;
+        o.connect(gn); gn.connect(actx.destination);
+        o.start(); o.stop(actx.currentTime + ms / 1000);
+      } catch (e) {}
+    }
+    api.onCleanup(() => { try { if (actx) actx.close(); } catch (e) {} });
+    for (let i = 0; i < 4; i++) {
+      const b = el('button', 's' + i); b.type = 'button'; b.setAttribute('aria-label', 'pad ' + (i + 1));
+      b.addEventListener('pointerdown', e => { e.preventDefault(); press(i); });
+      wrap.appendChild(b); pads.push(b);
+    }
+    function flash(i, ms) { pads[i].classList.add('lit'); beep(i, ms); api.timeout(() => pads[i].classList.remove('lit'), ms); }
+    function playback() {
+      accepting = false; pos = 0; api.status('Watch…');
+      const gap = Math.max(260, 620 - seq.length * 25), on = Math.max(180, 440 - seq.length * 20);
+      seq.forEach((n, k) => api.timeout(() => flash(n, on), 600 + k * gap));
+      api.timeout(() => { accepting = true; api.status('Your turn!'); }, 600 + seq.length * gap);
+    }
+    function nextRound() { seq.push(randInt(0, 3)); playback(); }
+    function begin() { seq = []; running = true; api.setScore(0); api.hideOverlay(); nextRound(); }
+    function press(i) {
+      if (!running || !accepting) return;
+      flash(i, 200);
+      if (seq[pos] !== i) {
+        running = false; accepting = false;
+        const s = seq.length - 1; api.finish(s);
+        api.timeout(() => api.overlay('Wrong pad! 😵', 'You remembered ' + s + (s === 1 ? ' round' : ' rounds'), 'Play again', begin), 500);
+        return;
+      }
+      pos++;
+      if (pos === seq.length) { accepting = false; api.setScore(seq.length); api.status('Nice! 👍'); api.timeout(nextRound, 800); }
+    }
+    api.on(window, 'keydown', e => {
+      const m = { '1': 0, '2': 1, '3': 2, '4': 3 };
+      if (m[e.key] !== undefined) press(m[e.key]);
+    });
+    api.status('Repeat the pattern!');
+    api.overlay('Simon Says 🎵', 'Watch the pads light up, then repeat the pattern. It gets longer every round! (Keys 1-4 work too.)', 'Play', begin);
+  }
+
+  /* =====================================================
+     GAME 13: BLOCK STACKER (falling blocks)
+     ===================================================== */
+  function stackerGame(api) {
+    const COLS = 10, ROWS = 20, S = 24, W = 380, H = 480;
+    const c = api.canvas(W, H), g = c.getContext('2d');
+    const SH = {
+      I: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], O: [[1,1],[1,1]], T: [[0,1,0],[1,1,1],[0,0,0]],
+      S: [[0,1,1],[1,1,0],[0,0,0]], Z: [[1,1,0],[0,1,1],[0,0,0]], J: [[1,0,0],[1,1,1],[0,0,0]], L: [[0,0,1],[1,1,1],[0,0,0]]
+    };
+    const COL = { I: '#22e4ff', O: '#ffd23f', T: '#a78bfa', S: '#3dff9a', Z: '#ff5d73', J: '#60a5fa', L: '#ff9f43' };
+    const KEYS = Object.keys(SH);
+    const emptyBoard = () => Array.from({ length: ROWS }, () => Array(COLS).fill(''));
+    let board = emptyBoard(), cur = null, nextT = null, score = 0, lines = 0, level = 1, state = 'idle', acc = 0, bag = [];
+
+    const rot = m => m[0].map((_, i) => m.map(r => r[i]).reverse());
+    const take = () => { if (!bag.length) bag = shuffle(KEYS); return bag.pop(); };
+    function mk(t) {
+      const m = SH[t]; let top = 0; while (!m[top].some(Boolean)) top++;
+      return { t, m, x: Math.floor((COLS - m[0].length) / 2), y: -top };
+    }
+    function hit(m, x, y) {
+      for (let r = 0; r < m.length; r++) for (let k = 0; k < m[r].length; k++) {
+        if (!m[r][k]) continue;
+        const bx = x + k, by = y + r;
+        if (bx < 0 || bx >= COLS || by >= ROWS) return true;
+        if (by >= 0 && board[by][bx]) return true;
+      }
+      return false;
+    }
+    const hud = () => { api.setScore(score); api.status('Level ' + level + '  ·  Lines ' + lines); };
+    function spawn() { cur = mk(nextT); nextT = take(); if (hit(cur.m, cur.x, cur.y)) gameOver(); }
+    function begin() {
+      board = emptyBoard(); score = 0; lines = 0; level = 1; bag = []; nextT = take(); acc = 0;
+      state = 'play'; api.hideOverlay(); spawn(); hud();
+    }
+    function gameOver() {
+      state = 'over'; api.finish(score);
+      api.overlay('Game over', 'Score ' + score + ' · ' + lines + ' lines', 'Play again', begin);
+    }
+    function lock() {
+      cur.m.forEach((row, r) => row.forEach((v, k) => {
+        if (v) { const by = cur.y + r, bx = cur.x + k; if (by >= 0) board[by][bx] = cur.t; }
+      }));
+      let cleared = 0;
+      for (let r = ROWS - 1; r >= 0; r--) {
+        if (board[r].every(Boolean)) { board.splice(r, 1); board.unshift(Array(COLS).fill('')); cleared++; r++; }
+      }
+      if (cleared) { score += [0, 100, 300, 500, 800][cleared] * level; lines += cleared; level = 1 + Math.floor(lines / 10); }
+      hud(); spawn();
+    }
+    const tryMove = (dx, dy) => { if (!hit(cur.m, cur.x + dx, cur.y + dy)) { cur.x += dx; cur.y += dy; return true; } return false; };
+    function rotate() {
+      const m = rot(cur.m);
+      for (const dx of [0, -1, 1, -2, 2]) if (!hit(m, cur.x + dx, cur.y)) { cur.m = m; cur.x += dx; return; }
+    }
+    function gravity() { if (!tryMove(0, 1)) lock(); acc = 0; }
+    function soft() { if (state !== 'play') return; if (tryMove(0, 1)) { score++; hud(); } else lock(); acc = 0; }
+    function hard() {
+      if (state !== 'play') return;
+      let d = 0; while (tryMove(0, 1)) d++;
+      score += 2 * d; lock(); acc = 0;
+    }
+    function act(name) {
+      if (state !== 'play') return;
+      if (name === 'left') tryMove(-1, 0); else if (name === 'right') tryMove(1, 0);
+      else if (name === 'down') soft(); else if (name === 'up') rotate(); else if (name === 'drop') hard();
+    }
+    const keymap = { ArrowLeft: 'left', ArrowRight: 'right', ArrowDown: 'down', ArrowUp: 'up', a: 'left', d: 'right', s: 'down', w: 'up', A: 'left', D: 'right', S: 'down', W: 'up' };
+    api.on(window, 'keydown', e => {
+      if (keymap[e.key] || e.key === ' ') e.preventDefault();
+      if (state !== 'play') { if (e.key === ' ' && !e.repeat) begin(); return; }
+      if (keymap[e.key]) act(keymap[e.key]); else if (e.key === ' ' && !e.repeat) act('drop');
+    });
+    api.dpad(act);
+    let sx = 0, sy = 0;
+    api.on(c, 'pointerdown', e => { sx = e.clientX; sy = e.clientY; });
+    api.on(c, 'pointerup', e => {
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) act('up');
+      else if (Math.abs(dx) > Math.abs(dy)) act(dx > 0 ? 'right' : 'left');
+      else if (dy > 0) act('drop');
+    });
+    api.loop(dt => {
+      if (state === 'play') { acc += dt * 1000; if (acc >= Math.max(90, 820 - (level - 1) * 70)) gravity(); }
+      draw();
+    });
+    function cell(x, y, color) {
+      g.fillStyle = color; roundRect(g, x * S + 1, y * S + 1, S - 2, S - 2, 4); g.fill();
+      g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(x * S + 4, y * S + 4, S - 8, 3);
+    }
+    function draw() {
+      g.fillStyle = '#0d1030'; g.fillRect(0, 0, W, H);
+      g.fillStyle = '#141847'; g.fillRect(0, 0, COLS * S, H);
+      g.strokeStyle = 'rgba(255,255,255,.05)'; g.lineWidth = 1; g.beginPath();
+      for (let x = 1; x < COLS; x++) { g.moveTo(x * S, 0); g.lineTo(x * S, H); }
+      for (let y = 1; y < ROWS; y++) { g.moveTo(0, y * S); g.lineTo(COLS * S, y * S); }
+      g.stroke();
+      board.forEach((row, y) => row.forEach((t, x) => { if (t) cell(x, y, COL[t]); }));
+      if (cur && state === 'play') {
+        let gy = cur.y; while (!hit(cur.m, cur.x, gy + 1)) gy++;
+        g.globalAlpha = 0.22; g.fillStyle = COL[cur.t];
+        cur.m.forEach((row, r) => row.forEach((v, k) => { if (v && gy + r >= 0) g.fillRect((cur.x + k) * S + 1, (gy + r) * S + 1, S - 2, S - 2); }));
+        g.globalAlpha = 1;
+        cur.m.forEach((row, r) => row.forEach((v, k) => { if (v && cur.y + r >= 0) cell(cur.x + k, cur.y + r, COL[cur.t]); }));
+      }
+      const px = COLS * S + 18;
+      g.fillStyle = '#b6a9e8'; g.font = '600 15px Fredoka, system-ui'; g.textAlign = 'left'; g.textBaseline = 'top';
+      g.fillText('NEXT', px, 16);
+      if (nextT) SH[nextT].forEach((row, r) => row.forEach((v, k) => {
+        if (v) { g.fillStyle = COL[nextT]; roundRect(g, px + k * 20, 44 + r * 20, 18, 18, 3); g.fill(); }
+      }));
+      g.fillStyle = '#b6a9e8'; g.font = '600 15px Fredoka, system-ui';
+      g.fillText('LEVEL', px, 150); g.fillText('LINES', px, 210);
+      g.fillStyle = '#fff'; g.font = 'bold 26px Fredoka, system-ui';
+      g.fillText(String(level), px, 170); g.fillText(String(lines), px, 230);
+    }
+    draw();
+    api.overlay('Block Stacker 🧩', 'Arrows / WASD to move and rotate (↑), Space to drop. On a phone: tap to rotate, swipe to move, swipe down to drop. Clear full lines!', 'Play', begin);
+  }
+
+  /* =====================================================
+     GAME 14: GHOST BLASTER
+     ===================================================== */
+  function ghostGame(api) {
+    const W = 400, H = 520;
+    const c = api.canvas(W, H), g = c.getContext('2d');
+    let px = W / 2, bullets = [], ghosts = [], pops = [], score = 0, lives = 3, state = 'idle', t = 0, spawnIn = 0, shootIn = 0, left = false, right = false;
+    const stars = Array.from({ length: 40 }, () => ({ x: rand(0, W), y: rand(0, H), r: rand(0.6, 1.8) }));
+    const hud = () => { api.setScore(score); api.status('Lives ' + '♥'.repeat(lives) + '♡'.repeat(3 - lives)); };
+    function begin() {
+      px = W / 2; bullets = []; ghosts = []; pops = []; score = 0; lives = 3; t = 0; spawnIn = 0.4; shootIn = 0;
+      state = 'play'; api.hideOverlay(); hud();
+    }
+    function end() {
+      state = 'over'; api.finish(score);
+      api.overlay('The ghosts got you! 👻', 'Score ' + score, 'Play again', begin);
+    }
+    api.on(window, 'keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { left = true; e.preventDefault(); }
+      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { right = true; e.preventDefault(); }
+      else if (e.key === ' ') { e.preventDefault(); if (state !== 'play' && !e.repeat) begin(); }
+    });
+    api.on(window, 'keyup', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') right = false;
+    });
+    api.on(c, 'pointermove', e => { px = clamp(canvasPos(c, e).x, 24, W - 24); });
+    api.on(c, 'pointerdown', e => { px = clamp(canvasPos(c, e).x, 24, W - 24); });
+
+    api.loop(dt => {
+      if (state === 'play') {
+        t += dt;
+        if (left) px -= 340 * dt; if (right) px += 340 * dt;
+        px = clamp(px, 24, W - 24);
+        shootIn -= dt;
+        if (shootIn <= 0) { bullets.push({ x: px, y: H - 76 }); shootIn = 0.26; }
+        spawnIn -= dt;
+        if (spawnIn <= 0) {
+          const big = Math.random() < 0.12;
+          ghosts.push({ x: rand(36, W - 36), y: -30, dx: 0, vy: rand(40, 70) + t * 1.6, hp: big ? 3 : 1, big, ph: rand(0, 6.28), amp: rand(10, 40) });
+          spawnIn = Math.max(0.35, 1.1 - t * 0.012);
+        }
+        bullets.forEach(b => { b.y -= 520 * dt; });
+        ghosts.forEach(gh => { gh.y += gh.vy * dt; gh.ph += dt * 2; gh.dx = Math.sin(gh.ph) * gh.amp; });
+        for (const b of bullets) for (const gh of ghosts) {
+          if (b.dead || gh.dead) continue;
+          const rr = gh.big ? 32 : 22;
+          if (Math.abs(b.x - (gh.x + gh.dx)) < rr && Math.abs(b.y - gh.y) < rr) {
+            b.dead = true; gh.hp--;
+            if (gh.hp <= 0) { gh.dead = true; score += gh.big ? 30 : 10; pops.push({ x: gh.x + gh.dx, y: gh.y, t: 0.4 }); hud(); }
+          }
+        }
+        bullets = bullets.filter(b => !b.dead && b.y > -10);
+        ghosts = ghosts.filter(gh => {
+          if (gh.dead) return false;
+          if (gh.y > H - 50) { lives--; hud(); return false; }
+          return true;
+        });
+        pops.forEach(p => { p.t -= dt; }); pops = pops.filter(p => p.t > 0);
+        if (lives <= 0) end();
+      }
+      draw();
+    });
+    function draw() {
+      const sky = g.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, '#0b0820'); sky.addColorStop(1, '#2a1250');
+      g.fillStyle = sky; g.fillRect(0, 0, W, H);
+      g.fillStyle = 'rgba(255,255,255,.7)';
+      stars.forEach(s => { g.beginPath(); g.arc(s.x, s.y, s.r, 0, 7); g.fill(); });
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.font = '60px system-ui, sans-serif'; g.fillText('🌕', W - 60, 60);
+      ghosts.forEach(gh => {
+        g.font = (gh.big ? 62 : 40) + 'px system-ui, sans-serif';
+        g.fillText(gh.big ? '🎃' : '👻', gh.x + gh.dx, gh.y);
+      });
+      g.fillStyle = '#7df9ff';
+      bullets.forEach(b => { g.beginPath(); g.arc(b.x, b.y, 5, 0, 7); g.fill(); });
+      g.font = '28px system-ui, sans-serif';
+      pops.forEach(p => { g.globalAlpha = p.t / 0.4; g.fillText('✨', p.x, p.y); g.globalAlpha = 1; });
+      g.font = '46px system-ui, sans-serif'; g.fillText('🧙', px, H - 40);
+      g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(0, H - 14, W, 14);
+    }
+    draw();
+    api.overlay('Ghost Blaster 👻', 'Move the witch with your mouse, finger or arrow keys. She zaps automatically! Pumpkins take 3 hits. Don\'t let ghosts reach the ground.', 'Play', begin);
+  }
+
+  /* =====================================================
+     GAME 15: PUMPKIN CATCH
+     ===================================================== */
+  function pumpkinGame(api) {
+    const W = 400, H = 500;
+    const c = api.canvas(W, H), g = c.getContext('2d');
+    const EMOJI = { pumpkin: '🎃', candy: '🍬', skull: '💀' };
+    let bx = W / 2, items = [], score = 0, lives = 3, state = 'idle', t = 0, spawnIn = 0, left = false, right = false, flash = 0;
+    const hud = () => { api.setScore(score); api.status('Lives ' + '♥'.repeat(lives) + '♡'.repeat(3 - lives)); };
+    function begin() {
+      bx = W / 2; items = []; score = 0; lives = 3; t = 0; spawnIn = 0.3; flash = 0;
+      state = 'play'; api.hideOverlay(); hud();
+    }
+    function end() {
+      state = 'over'; api.finish(score);
+      api.overlay('Game over 💀', 'You collected ' + score + ' points', 'Play again', begin);
+    }
+    api.on(window, 'keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { left = true; e.preventDefault(); }
+      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { right = true; e.preventDefault(); }
+      else if (e.key === ' ') { e.preventDefault(); if (state !== 'play' && !e.repeat) begin(); }
+    });
+    api.on(window, 'keyup', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') right = false;
+    });
+    api.on(c, 'pointermove', e => { bx = clamp(canvasPos(c, e).x, 40, W - 40); });
+    api.on(c, 'pointerdown', e => { bx = clamp(canvasPos(c, e).x, 40, W - 40); });
+
+    api.loop(dt => {
+      if (state === 'play') {
+        t += dt;
+        if (left) bx -= 380 * dt; if (right) bx += 380 * dt;
+        bx = clamp(bx, 40, W - 40);
+        spawnIn -= dt;
+        if (spawnIn <= 0) {
+          const r = Math.random();
+          items.push({ x: rand(30, W - 30), y: -30, vy: rand(130, 200) + t * 3.2, type: r < 0.62 ? 'pumpkin' : r < 0.82 ? 'candy' : 'skull' });
+          spawnIn = Math.max(0.32, 0.9 - t * 0.01);
+        }
+        items.forEach(it => { it.y += it.vy * dt; });
+        items = items.filter(it => {
+          if (it.y > H - 80 && it.y < H - 25 && Math.abs(it.x - bx) < 50) {
+            if (it.type === 'pumpkin') score += 1;
+            else if (it.type === 'candy') score += 3;
+            else { lives--; flash = 0.3; }
+            hud(); return false;
+          }
+          return it.y < H + 40;
+        });
+        if (flash > 0) flash -= dt;
+        if (lives <= 0) end();
+      }
+      draw();
+    });
+    function draw() {
+      const sky = g.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, '#1a0933'); sky.addColorStop(1, '#6b1f7a');
+      g.fillStyle = sky; g.fillRect(0, 0, W, H);
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.font = '70px system-ui, sans-serif'; g.fillText('🌕', 70, 70);
+      g.font = '34px system-ui, sans-serif'; g.fillText('🦇', 300, 90); g.fillText('🦇', 230, 150);
+      g.fillStyle = '#2a0f3d'; g.fillRect(0, H - 22, W, 22);
+      items.forEach(it => { g.font = '38px system-ui, sans-serif'; g.fillText(EMOJI[it.type], it.x, it.y); });
+      g.font = '58px system-ui, sans-serif'; g.fillText('🧺', bx, H - 40);
+      if (flash > 0) { g.fillStyle = 'rgba(255,0,0,' + (flash / 0.3 * 0.35) + ')'; g.fillRect(0, 0, W, H); }
+    }
+    draw();
+    api.overlay('Pumpkin Catch 🎃', 'Move the basket with your mouse, finger or arrow keys. Catch 🎃 (+1) and 🍬 (+3). Dodge the 💀, they cost a life!', 'Play', begin);
+  }
+
+  /* =====================================================
+     SECRET GAME: CHEESE CHASE
+     ===================================================== */
+  function cheeseGame(api) {
+    const N = 13, CS = 30, W = N * CS, H = N * CS;
+    const c = api.canvas(W, H), g = c.getContext('2d');
+    const key = (x, y) => y * N + x;
+    let walls = new Set(), mouse = { x: 6, y: 6 }, cat = { x: 0, y: 0 }, cheese = { x: 3, y: 3 };
+    let score = 0, lives = 3, state = 'idle', catIn = 0, lastMove = 0;
+    const hud = () => { api.setScore(score); api.status('Lives ' + '♥'.repeat(lives) + '♡'.repeat(3 - lives)); };
+
+    function makeWalls() {
+      walls = new Set(); let tries = 0;
+      while (walls.size < 18 && tries++ < 600) {
+        const x = randInt(0, N - 1), y = randInt(0, N - 1);
+        if (Math.abs(x - 6) + Math.abs(y - 6) <= 2) continue;
+        if (x + y <= 2 || (N - 1 - x) + (N - 1 - y) <= 2) continue;
+        walls.add(key(x, y));
+      }
+    }
+    function bfs(sx, sy) {
+      const prev = new Map([[key(sx, sy), -1]]); const q = [[sx, sy]];
+      for (let i = 0; i < q.length; i++) {
+        const [x, y] = q[i];
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= N || ny >= N) continue;
+          const k = key(nx, ny);
+          if (walls.has(k) || prev.has(k)) continue;
+          prev.set(k, key(x, y)); q.push([nx, ny]);
+        }
+      }
+      return prev;
+    }
+    function placeCheese() {
+      const reach = bfs(mouse.x, mouse.y);
+      const opts = [...reach.keys()].filter(k => k !== key(mouse.x, mouse.y) && k !== key(cat.x, cat.y));
+      const k = opts[randInt(0, opts.length - 1)];
+      cheese = { x: k % N, y: Math.floor(k / N) };
+    }
+    function catStep() {
+      const prev = bfs(cat.x, cat.y), target = key(mouse.x, mouse.y), me = key(cat.x, cat.y);
+      if (target === me || !prev.has(target)) return;
+      let k = target, p = prev.get(k);
+      while (p !== me && p !== -1) { k = p; p = prev.get(k); }
+      cat.x = k % N; cat.y = Math.floor(k / N);
+    }
+    function collect() {
+      if (mouse.x === cheese.x && mouse.y === cheese.y) { score++; hud(); placeCheese(); }
+    }
+    function checkCatch() {
+      if (cat.x !== mouse.x || cat.y !== mouse.y) return;
+      lives--; hud();
+      if (lives <= 0) {
+        state = 'over'; api.finish(score);
+        api.overlay('The cat got you! 🐱', 'You collected ' + score + ' cheese', 'Play again', begin);
+        return;
+      }
+      mouse = { x: 6, y: 6 }; cat = { x: 0, y: 0 }; catIn = 1.2; collect();
+    }
+    function begin() {
+      makeWalls(); mouse = { x: 6, y: 6 }; cat = { x: 0, y: 0 }; score = 0; lives = 3; catIn = 1.2;
+      placeCheese(); state = 'play'; api.hideOverlay(); hud();
+    }
+    function move(dx, dy) {
+      if (state !== 'play') return;
+      const now = performance.now(); if (now - lastMove < 85) return; lastMove = now;
+      const nx = mouse.x + dx, ny = mouse.y + dy;
+      if (nx < 0 || ny < 0 || nx >= N || ny >= N || walls.has(key(nx, ny))) return;
+      mouse.x = nx; mouse.y = ny; collect(); checkCatch();
+    }
+    const dirs = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+    const keymap = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
+    api.on(window, 'keydown', e => {
+      if (keymap[e.key]) { e.preventDefault(); move(...dirs[keymap[e.key]]); }
+      else if (e.key === ' ') { e.preventDefault(); if (state !== 'play' && !e.repeat) begin(); }
+    });
+    api.dpad(name => move(...dirs[name]));
+    let sx = 0, sy = 0;
+    api.on(c, 'pointerdown', e => { sx = e.clientX; sy = e.clientY; });
+    api.on(c, 'pointerup', e => {
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return;
+      if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 1 : -1, 0); else move(0, dy > 0 ? 1 : -1);
+    });
+    api.loop(dt => {
+      if (state === 'play') {
+        catIn -= dt;
+        if (catIn <= 0) { catStep(); checkCatch(); catIn = Math.max(0.2, 0.5 - score * 0.015); }
+      }
+      draw();
+    });
+    function draw() {
+      g.fillStyle = '#2a1b66'; g.fillRect(0, 0, W, H);
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        if ((x + y) % 2 === 0) { g.fillStyle = 'rgba(255,255,255,.04)'; g.fillRect(x * CS, y * CS, CS, CS); }
+      }
+      walls.forEach(k => {
+        const x = k % N, y = Math.floor(k / N);
+        g.fillStyle = '#7a4a22'; roundRect(g, x * CS + 1.5, y * CS + 1.5, CS - 3, CS - 3, 5); g.fill();
+        g.fillStyle = 'rgba(255,255,255,.15)'; g.fillRect(x * CS + 5, y * CS + 5, CS - 10, 3);
+      });
+      g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '22px system-ui, sans-serif';
+      g.fillText('🧀', cheese.x * CS + CS / 2, cheese.y * CS + CS / 2 + 1);
+      g.fillText('🐱', cat.x * CS + CS / 2, cat.y * CS + CS / 2 + 1);
+      g.fillText('🐭', mouse.x * CS + CS / 2, mouse.y * CS + CS / 2 + 1);
+    }
+    makeWalls(); placeCheese(); draw();
+    api.overlay('Cheese Chase 🧀', 'You found the secret game! Grab the cheese with the mouse 🐭 (arrow keys / WASD / swipe) and run from the cat 🐱. 3 lives.', 'Play', begin);
+  }
+
   const GAMES = [
     { id: 'snake', name: 'Snake', emoji: '🐍', cat: 'Classic', c1: '#34d399', c2: '#047857', badge: 'HOT',
       how: 'Arrow keys / WASD (or swipe) to steer. Eat 5 apples to level up: +1 life, faster snake, more obstacles. Space pauses.', init: snakeGame },
@@ -1150,16 +1791,28 @@
       how: 'Move your mouse or finger up and down (or use W / S). Return the ball to score. You have 3 lives!', init: pongGame },
     { id: 'breakout', name: 'Brick Smash', emoji: '🧱', cat: 'Arcade', c1: '#fb7185', c2: '#f97316',
       how: 'Move the paddle with the mouse, your finger or the arrow keys. Click or press Space to launch the ball.', init: breakoutGame },
-    { id: 'merge', name: 'Number Merge', emoji: '🔢', cat: 'Puzzle', c1: '#fcd34d', c2: '#d97706', badge: 'NEW',
+    { id: 'merge', name: 'Number Merge', emoji: '🔢', cat: 'Puzzle', c1: '#fcd34d', c2: '#d97706',
       how: 'Slide the tiles with the arrow keys or swipe. Matching numbers merge. Can you make 2048?', init: mergeGame },
     { id: 'whack', name: 'Whack-a-Critter', emoji: '🔨', cat: 'Arcade', c1: '#a3e635', c2: '#b45309', scoreLabel: 'Score',
       how: 'Tap the 🐹 for 1 point and the 🌟 for 3. Do NOT tap the 💣! You have 30 seconds.', init: whackGame },
-    { id: 'runner', name: 'Jump Runner', emoji: '🦊', cat: 'Action', c1: '#fb923c', c2: '#dc2626', scoreLabel: 'Meters', badge: 'NEW',
+    { id: 'runner', name: 'Jump Runner', emoji: '🦊', cat: 'Action', c1: '#fb923c', c2: '#dc2626', scoreLabel: 'Meters',
       how: 'Press Space or ↑ (or tap) to jump over the cacti. The longer you run, the faster it gets.', init: runnerGame },
     { id: 'mines', name: 'Minesweeper', emoji: '💣', cat: 'Puzzle', c1: '#94a3b8', c2: '#475569', scoreLabel: 'Time', lower: true, fmt: v => v + 's',
-      how: 'Click to reveal squares. Numbers tell you how many mines are next to them. Right-click (or Flag mode on phones) to plant a flag. Win as fast as you can!', init: minesGame }
+      how: 'Click to reveal squares. Numbers tell you how many mines are next to them. Right-click (or Flag mode on phones) to plant a flag. Win as fast as you can!', init: minesGame },
+    { id: 'connect4', name: 'Connect 4', emoji: '🔴', cat: 'Classic', c1: '#60a5fa', c2: '#1d4ed8', scoreLabel: 'Wins', badge: 'NEW',
+      how: 'Drop your 🔴 discs into the columns. Get four in a row (up, across or diagonal) before the CPU does!', init: connect4Game },
+    { id: 'simon', name: 'Simon Says', emoji: '🎵', cat: 'Puzzle', c1: '#4ade80', c2: '#be123c', scoreLabel: 'Rounds', badge: 'NEW',
+      how: 'Watch the colors light up, then repeat the pattern. It gets one step longer every round. Turn your sound on!', init: simonGame },
+    { id: 'stacker', name: 'Block Stacker', emoji: '🧩', cat: 'Arcade', c1: '#c084fc', c2: '#4338ca', badge: 'HOT',
+      how: 'Arrow keys / WASD to move, ↑ to rotate, Space to drop. Fill whole lines to clear them. On a phone: tap to rotate, swipe to move, swipe down to drop.', init: stackerGame },
+    { id: 'ghosts', name: 'Ghost Blaster', emoji: '👻', cat: 'Spooky', c1: '#8b5cf6', c2: '#1e1b4b', badge: 'SPOOKY',
+      how: 'Move the witch with your mouse, finger or arrow keys. She zaps automatically! Pumpkins take 3 hits. Do not let any ghost reach the ground.', init: ghostGame },
+    { id: 'pumpkin', name: 'Pumpkin Catch', emoji: '🎃', cat: 'Spooky', c1: '#fb923c', c2: '#7c2d12', badge: 'SPOOKY',
+      how: 'Catch the falling 🎃 (+1) and 🍬 (+3) in your basket. Dodge the 💀, each one costs a life!', init: pumpkinGame },
+    { id: 'cheese', name: 'Cheese Chase', emoji: '🧀', cat: 'Secret', hidden: true, c1: '#fde047', c2: '#ca8a04', scoreLabel: 'Cheese', badge: 'SECRET',
+      how: 'You found the secret game! Move the mouse 🐭 to grab the cheese 🧀 and run away from the cat 🐱. You have 3 lives.', init: cheeseGame }
   ];
-  const CATS = ['All', 'Arcade', 'Puzzle', 'Classic', 'Action'];
+  const CATS = ['All', 'Arcade', 'Puzzle', 'Classic', 'Action', 'Spooky'];
 
   /* =====================================================
      APP SHELL: router, home page, game page
@@ -1174,20 +1827,20 @@
   function cardHTML(g) {
     const b = bestOf(g);
     return '<a class="card" href="#/' + g.id + '" style="--c1:' + g.c1 + ';--c2:' + g.c2 + '">' +
-      (g.badge ? '<span class="badge ' + (g.badge === 'NEW' ? 'new' : '') + '">' + g.badge + '</span>' : '') +
+      (g.badge ? '<span class="badge ' + g.badge.toLowerCase() + '">' + g.badge + '</span>' : '') +
       '<div class="art">' + g.emoji + '</div>' +
       '<div class="meta"><span class="name">' + g.name + '</span>' +
       '<span class="sub"><span>' + g.cat + '</span><span>' + (b == null ? 'Play now!' : '★ ' + fmtBest(g, b)) + '</span></span></div></a>';
   }
 
   function showHome() {
-    document.title = 'Mouse 13 Games';
+    document.title = 'Mouse 13 Games - js like me';
     app.innerHTML =
       '<section class="hero">' +
-        '<div class="hero-emoji">🐭🎮🕹️</div>' +
+        '<div class="hero-emoji"><span class="nh">🐭🎮🕹️</span><span class="hw">🎃👻🦇</span></div>' +
         '<h1>Mouse 13 Games</h1>' +
         '<p class="tagline">js like me 😎</p>' +
-        '<div class="pills"><span>' + GAMES.length + ' games</span><span>100% free</span><span>no ads</span><span>no downloads</span></div>' +
+        '<div class="pills"><span>' + visibleGames().length + ' games</span><span>100% free</span><span>no ads</span><span>no downloads</span></div>' +
       '</section>' +
       '<section class="controls">' +
         '<input id="search" type="search" placeholder="🔍 Search games..." autocomplete="off">' +
@@ -1210,18 +1863,19 @@
     }
     function renderGrid() {
       const q = query.trim().toLowerCase();
-      const list = GAMES.filter(g => (cat === 'All' || g.cat === cat) && (!q || (g.name + ' ' + g.cat).toLowerCase().includes(q)));
+      const list = visibleGames().filter(g => (cat === 'All' || g.cat === cat) && (!q || (g.name + ' ' + g.cat).toLowerCase().includes(q)));
       grid.innerHTML = list.map(cardHTML).join('');
       empty.classList.toggle('hidden', list.length > 0);
     }
     search.addEventListener('input', () => { query = search.value; renderGrid(); });
-    $('#rand').addEventListener('click', () => { location.hash = '#/' + GAMES[randInt(0, GAMES.length - 1)].id; });
+    $('#rand').addEventListener('click', () => { const vg = visibleGames(); go(vg[randInt(0, vg.length - 1)].id); });
     renderChips(); renderGrid();
+    pokeHero($('.hero h1'));
   }
 
   function showGame(def) {
     document.title = def.name + ' - Mouse 13 Games';
-    const others = GAMES.filter(g => g.id !== def.id);
+    const others = visibleGames().filter(g => g.id !== def.id);
     app.innerHTML =
       '<section>' +
         '<div class="gv-top">' +
@@ -1245,6 +1899,7 @@
 
     function makeApi() {
       const cleanups = [];
+      let lastShown = 0;
       const a = {
         stage, board,
         add(node) { board.insertBefore(node, ov); return node; },
@@ -1267,7 +1922,11 @@
           id = requestAnimationFrame(frame);
           cleanups.push(() => { alive = false; cancelAnimationFrame(id); });
         },
-        setScore(n) { scoreEl.textContent = n; },
+        setScore(n) {
+          scoreEl.textContent = n;
+          if (n === 13 && lastShown !== 13) { toast('🍀 LUCKY 13! 🐭'); rain(['🍀', '🐭', '✨'], 22); }
+          lastShown = n;
+        },
         status(t) { statusEl.textContent = t; },
         finish(score) {
           const b = bestOf(def);
@@ -1312,14 +1971,169 @@
     start();
   }
 
+  // Navigation is handled by the page itself, so it works even where #links are blocked
+  // (preview panes, in-app browsers). The URL hash is only a bonus for back button / bookmarks.
+  let routeId = null, shownId = null;
+  const hashId = () => { try { return location.hash.replace(/^#\/?/, ''); } catch (e) { return ''; } };
+  const currentId = () => (routeId !== null ? routeId : hashId());
+  function go(id) {
+    routeId = id;
+    try { if (id !== hashId()) history.pushState(null, '', '#/' + id); } catch (e) {}
+    route();
+  }
+  document.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest && e.target.closest('a[href^="#/"]');
+    if (!a) return;
+    e.preventDefault();
+    go(a.getAttribute('href').slice(2));
+  });
+  function onNav() { routeId = null; if (hashId() !== shownId) route(); }
+
   function route() {
     if (current) { current.cleanup(); current = null; }
-    const id = location.hash.replace(/^#\/?/, '');
-    const def = GAMES.find(g => g.id === id);
+    const id = currentId();
+    shownId = id;
+    let def = GAMES.find(g => g.id === id);
+    if (def && def.hidden && !isUnlocked()) def = null;
+    document.body.classList.toggle('in-game', !!def);
     window.scrollTo(0, 0);
     if (def) showGame(def); else showHome();
   }
-  window.addEventListener('hashchange', route);
+  /* =====================================================
+     THEME + EASTER EGGS
+     ===================================================== */
+  let toastTimer = 0;
+  function toast(msg, ms) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), ms || 2600);
+  }
+  function rain(list, n) {
+    const fx = $('#fx');
+    for (let i = 0; i < (n || 40); i++) {
+      const s = el('span', 'fx-item', list[randInt(0, list.length - 1)]);
+      s.style.left = rand(0, 96) + 'vw'; s.style.fontSize = rand(1.4, 3) + 'rem';
+      s.style.animationDuration = rand(2.2, 4.5) + 's'; s.style.animationDelay = rand(0, 1.2) + 's';
+      fx.appendChild(s); setTimeout(() => s.remove(), 6500);
+    }
+  }
+  function runAcross(emoji) {
+    const s = el('span', 'run-item', emoji); s.style.bottom = '24px';
+    $('#fx').appendChild(s); setTimeout(() => s.remove(), 4400);
+  }
+  function boo() {
+    const d = el('div', 'boo', '<div>👻<div class="boo-t">BOO!</div></div>');
+    document.body.appendChild(d);
+    app.classList.add('shake'); setTimeout(() => app.classList.remove('shake'), 600);
+    setTimeout(() => d.remove(), 1000);
+  }
+  function konami() {
+    const h = document.documentElement; h.classList.add('rainbow');
+    rain(['🌈', '⭐', '🎮', '🕹️', '👾'], 50);
+    toast('🎮 KONAMI CODE! Disco mode activated 🌈', 4000);
+    setTimeout(() => h.classList.remove('rainbow'), 9000);
+  }
+  function pokeHero(h1) {
+    if (!h1) return;
+    let pokes = 0, timer = 0;
+    h1.style.cursor = 'pointer';
+    h1.addEventListener('click', () => {
+      pokes++; clearTimeout(timer); timer = setTimeout(() => { pokes = 0; }, 1500);
+      if (pokes >= 5) {
+        pokes = 0; app.classList.add('shake'); setTimeout(() => app.classList.remove('shake'), 600);
+        toast('😵 Ow! Stop poking me!');
+      }
+    });
+  }
+
+  const isUnlocked = () => store.get('secret') === true;
+  const visibleGames = () => GAMES.filter(g => !g.hidden || isUnlocked());
+  function unlockSecret() {
+    if (isUnlocked()) { toast('🧀 Cheese Chase is already unlocked! Look on the home page.', 3500); return; }
+    store.set('secret', true);
+    rain(['🧀', '🐭', '✨'], 50);
+    toast('🧀 SECRET GAME UNLOCKED: Cheese Chase!', 4500);
+    if (!currentId()) route();
+  }
+
+  // Halloween theme (on by default, remembered)
+  const themeBtn = $('#theme-btn');
+  let halloween = store.get('halloween') !== false;
+  function applyTheme() {
+    document.body.classList.toggle('halloween', halloween);
+    themeBtn.textContent = halloween ? '🎃 Halloween: on' : '🎃 Halloween: off';
+  }
+  themeBtn.addEventListener('click', () => {
+    halloween = !halloween; store.set('halloween', halloween); applyTheme();
+    toast(halloween ? '🎃 Happy Halloween!' : '☀️ Back to normal mode');
+  });
+  applyTheme();
+
+  // Floating Halloween decorations (bats you can catch!)
+  const spooky = $('#spooky');
+  let batCount = 0;
+  const squeaks = ['🦇 squeak!', '🦇 eek!', '🦇 you got me!', '🦇 flap flap!', '🦇 hey, careful!'];
+  for (let i = 0; i < 6; i++) {
+    const b = el('span', 'bat', '🦇');
+    b.style.top = rand(8, 60) + 'vh'; b.style.fontSize = rand(1.4, 2.4) + 'rem';
+    b.style.animationDuration = rand(14, 26) + 's'; b.style.animationDelay = (-rand(0, 20)) + 's';
+    b.addEventListener('click', () => {
+      b.style.visibility = 'hidden'; setTimeout(() => { b.style.visibility = ''; }, 6000);
+      batCount++;
+      if (batCount === 5) boo();
+      else if (batCount === 13) unlockSecret();
+      else toast(squeaks[randInt(0, squeaks.length - 1)] + ' (' + batCount + ')', 1400);
+    });
+    spooky.appendChild(b);
+  }
+  [['4%', '38vh'], ['90%', '62vh'], ['8%', '78vh']].forEach(([l, t]) => {
+    const gh = el('span', 'ghost-float', '👻'); gh.style.left = l; gh.style.top = t; spooky.appendChild(gh);
+  });
+  spooky.appendChild(el('span', 'web web-l', '🕸️'));
+  spooky.appendChild(el('span', 'web web-r', '🕸️'));
+
+  // Easter egg: click the mouse in the logo 13 times
+  let logoClicks = 0, logoLast = 0;
+  $('.logo-emoji').addEventListener('click', () => {
+    const now = Date.now(); logoClicks = now - logoLast < 2500 ? logoClicks + 1 : 1; logoLast = now;
+    if (logoClicks === 5) toast('🐭 hehe, that tickles!');
+    else if (logoClicks === 9) toast('🐭 keep going… 🧀');
+    else if (logoClicks === 13) { logoClicks = 0; unlockSecret(); }
+  });
+
+  // Easter eggs: Konami code + secret words typed on the home page
+  const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  const WORDS = {
+    boo: boo,
+    mouse: () => { runAcross('🐭'); toast('🐭 squeak!'); },
+    cheese: () => { rain(['🧀'], 40); toast('🧀 cheese rain!'); },
+    pumpkin: () => { rain(['🎃'], 40); toast('🎃 pumpkin storm!'); },
+    spooky: () => themeBtn.click(),
+    secret: () => toast('🤫 Psst… the mouse in the corner likes to be clicked. 13 times. 🧀', 4500),
+    '13': () => { toast('🍀 Lucky 13!'); rain(['🍀', '🐭'], 25); }
+  };
+  let kpos = 0, typed = '';
+  window.addEventListener('keydown', e => {
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (k === KONAMI[kpos]) { kpos++; if (kpos === KONAMI.length) { kpos = 0; konami(); } }
+    else kpos = (k === KONAMI[0]) ? 1 : 0;
+    if (document.body.classList.contains('in-game')) return;
+    const tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-12);
+    for (const w in WORDS) if (typed.endsWith(w)) { typed = ''; WORDS[w](); break; }
+  });
+
+  // Easter egg: the tab title misses you
+  let savedTitle = '';
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { savedTitle = document.title; document.title = 'Come back! 🐭'; }
+    else if (savedTitle) { document.title = savedTitle; }
+  });
+  try { console.log('%c👀 Looking in the console? Psst: click the mouse in the corner 13 times. 🧀', 'font-size:14px;color:#ff7a00'); } catch (e) {}
+
+  window.addEventListener('hashchange', onNav);
+  window.addEventListener('popstate', onNav);
   route();
 })();
 </script>
